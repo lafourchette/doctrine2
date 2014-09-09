@@ -84,13 +84,6 @@ class EntityManager implements ObjectManager
     private $eventManager;
 
     /**
-     * The maintained (cached) hydrators. One instance per type.
-     *
-     * @var array
-     */
-    private $hydrators = array();
-
-    /**
      * The proxy factory used to create dynamic proxies.
      *
      * @var \Doctrine\ORM\Proxy\ProxyFactory
@@ -764,16 +757,14 @@ class EntityManager implements ObjectManager
      * This method caches the hydrator instances which is used for all queries that don't
      * selectively iterate over the result.
      *
+     * @deprecated
+     *
      * @param int $hydrationMode
      * @return \Doctrine\ORM\Internal\Hydration\AbstractHydrator
      */
     public function getHydrator($hydrationMode)
     {
-        if ( ! isset($this->hydrators[$hydrationMode])) {
-            $this->hydrators[$hydrationMode] = $this->newHydrator($hydrationMode);
-        }
-
-        return $this->hydrators[$hydrationMode];
+        return $this->newHydrator($hydrationMode);
     }
 
     /**
